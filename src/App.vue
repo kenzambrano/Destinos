@@ -58,11 +58,38 @@
     <main>
       <v-container fluid>
         <v-slide-y-transition mode="out-in">
-          <v-layout column align-center>
-            <p v-for="user of users">
-              {{ user.name }}
-            </p>
+
+          <v-layout row wrap align-center>
+
+            <v-flex xs12>
+              <v-card height="70px" style="overflow: hidden;">
+                <v-bottom-nav absolute :value="e31" class="transparent">
+                  <v-btn flat light class="teal--text" @click.native="e3 = 1" :value="e3 === 1">
+                    <span>List Users</span>
+                    <v-icon>toc</v-icon>
+                  </v-btn>
+                  <v-btn flat light class="teal--text" @click.native="e3 = 2" :value="e3 === 2">
+                    <span>New Users</span>
+                    <v-icon>playlist_add</v-icon>
+                  </v-btn>
+                </v-bottom-nav>
+              </v-card>
+            </v-flex>
+
+            <v-data-table
+                v-bind:headers="headers"
+                :items="users"
+                hide-actions
+                class="elevation-5"
+              >
+              <template slot="items" scope="props">
+                <td>{{ props.item.id }}</td>
+                <td> {{ props.item.name }}</td>
+              </template>
+            </v-data-table>
+
           </v-layout>
+
         </v-slide-y-transition>
       </v-container>
     </main>
@@ -96,13 +123,50 @@
         drawer: true,
         fixed: false,
         items: [
-          { icon: 'bubble_chart', title: 'Inspire' }
+          { icon: 'supervisor_account', title: 'Users' },
+          { icon: 'explore', title: 'Destinations' },
+          { icon: 'card_travel', title: 'Packages' },
+          { icon: 'rate_review', title: 'Activities' },
+          { icon: 'mms', title: 'Experiences' },
+          { icon: 'work', title: 'Orders' },
         ],
         miniVariant: false,
         right: true,
         rightDrawer: false,
-        title: 'Vuetify.js',
-        users: {}
+        title: 'Destinos Magazines',
+
+        // tabla
+
+        headers: [
+          {
+            value: 'id',
+            align: 'left',
+            sortable: false,
+            text: 'Code Identify:'
+          },
+          {
+            value: 'name',
+            align: 'left',
+            text: 'Name:'
+          }
+        ],
+
+        users: [],
+
+        usuarios: [
+          {
+            id: 1,
+            name: 'Frozen Yogurt'
+          },
+          {
+            id: 1,
+            name: 'Ice cream sandwich'
+          },
+        ],
+
+        e3: 1,
+        e31: true
+
       }
     },
 
