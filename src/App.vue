@@ -83,10 +83,57 @@
                 class="elevation-5"
               >
               <template slot="items" scope="props">
-                <td>{{ props.item.id }}</td>
+                <td> {{ props.item.id }} </td>
                 <td> {{ props.item.name }}</td>
+                <td> <span v-on:click="deleteUser(props.item)"> <v-icon>clear</v-icon> </span> </td>
               </template>
             </v-data-table>
+
+
+            <v-card class="lighten-10 elevation-5">
+              <v-card-text>
+                <v-container fluid>
+
+                  <form id="form" v-on:submit.prevent="addUser">
+                    <v-layout row>
+                      <v-flex xs4>
+                        <v-subheader>Nombre:</v-subheader>
+                      </v-flex>
+                      <v-flex xs8>
+                        <v-text-field
+                          name="name"
+                          label="Nombre"
+                          id="name"
+                          v-model="newUser.name"
+                        ></v-text-field>
+                      </v-flex>
+                    </v-layout>
+
+                    <v-layout row>
+                      <v-flex xs4>
+                        <v-subheader>Edad:</v-subheader>
+                      </v-flex>
+                      <v-flex xs8>
+                        <v-text-field
+                          name="age"
+                          label="Edad"
+                          id="age"
+                          v-model="newUser.age"
+                        ></v-text-field>
+                      </v-flex>
+                    </v-layout>
+
+                    <v-layout row>
+                      <v-flex xs12 align-center>
+                        <v-btn type="submit" flat primary>Guardar</v-btn>
+                      </v-flex>
+                    </v-layout>
+                  </form>
+
+                </v-container>
+              </v-card-text>
+            </v-card>
+
 
           </v-layout>
 
@@ -135,8 +182,7 @@
         rightDrawer: false,
         title: 'Destinos Magazines',
 
-        // tabla
-
+        /** tabla */
         headers: [
           {
             value: 'id',
@@ -150,23 +196,16 @@
             text: 'Name:'
           }
         ],
-
         users: [],
-
-        usuarios: [
-          {
-            id: 1,
-            name: 'Frozen Yogurt'
-          },
-          {
-            id: 1,
-            name: 'Ice cream sandwich'
-          },
-        ],
-
+        /** tabla */
         e3: 1,
-        e31: true
-
+        e31: true,
+        
+        /** insert users */
+        newUser: {
+          name: '',
+          age: ''
+        }
       }
     },
 
@@ -177,7 +216,23 @@
           console.error(err);
         }
       }
+    },
+
+    methods: {
+      addUser: function() {
+        source: db.ref('users').push(this.newUser);
+        this.newUser.name = '';
+        this.newUser.age = '';
+        alert('insert users');
+      },
+      deleteUser: function(user){
+        alert(JSON.stringify(user['.key']))
+        //source: db.ref(users).child(user['.key']).remove()
+        source: db.ref('users').child(user['.key']).remove()
+        alert('Delte user' )
+      }
     }
+
   }
 </script>
 
