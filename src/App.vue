@@ -200,7 +200,7 @@
         /** tabla */
         e3: 1,
         e31: true,
-        
+
         /** insert users */
         newUser: {
           name: '',
@@ -226,7 +226,7 @@
         alert('insert users');
       },
       deleteUser: function(user){
-        alert(JSON.stringify(user['.key']))
+        //alert(JSON.stringify(user['.key']))
         //source: db.ref(users).child(user['.key']).remove()
         source: db.ref('users').child(user['.key']).remove()
         alert('Delte user' )
